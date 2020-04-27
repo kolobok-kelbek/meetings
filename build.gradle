@@ -1,0 +1,129 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'com.github.sherter.google-java-format' version '0.8'
+    id 'java'
+}
+
+group 'com.mittings'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // PostgreSQL driver
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // JWT
+    compile 'io.jsonwebtoken:jjwt-api:0.10.7'
+    runtime 'io.jsonwebtoken:jjwt-impl:0.10.7'
+
+    /** Data Converters */
+
+    /**
+     * ModelMapper
+     *
+     * doc - http://modelmapper.org/
+     */
+    compile 'org.modelmapper:modelmapper:2.3.0'
+    compile 'org.modelmapper.extensions:modelmapper-jackson:2.3.0'
+
+    // Jackson
+    compile 'io.jsonwebtoken:jjwt-jackson:0.10.7'
+
+    /** Tests */
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // Faker
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def Properties localBootRunProperties() {
+    Properties p = new Properties();
+    p.load(new FileInputStream(
+            file(project.projectDir).absolutePath + "/src/main/resources/application.yml"))
+    return p;
+}
+
+build {
+    doFirst {
+        bootRun.systemProperties = localBootRunProperties() as Map<String, ?>
+    }
+}
+
+task dockerBuild(type: Exec) {
+    group "docker"
+    executable "docker"
+    args "build", "-f", "docker/Dockerfile", "-t", "mittings-api:1.0", "."
+    dependsOn 'build'
+}
+
+task dcUp(type: Exec) {
+    group "docker-compose"
+    executable "docker-compose"
+    args "up", "-d"
+}
+
+task dcBuild(type: Exec) {
+    group "docker-compose"
+    executable "docker-compose"
+    args "build"
+}
+
+task dcLogsAPI(type: Exec) {
+    group "docker-compose"
+    executable "docker-compose"
+    args "logs", "api"
+}
+
+task dcPs(type: Exec) {
+    group "docker-compose"
+    executable "docker-compose"
+    args "ps"
+}
+
+task dcDown(type: Exec) {
+    group "docker-compose"
+    executable "docker-compose"
+    args "down", "-v"
+}
+
+task dcStop(type: Exec) {
+    group "docker-compose"
+    executable "docker-compose"
+    args "stop"
+}
+
+task dcRestartAPI(type: Exec) {
+    group "docker-compose"
+    executable "docker-compose"
+    args "up", "--detach", "--build", "api"
+    dependsOn 'user-manager:dockerBuild'
+}

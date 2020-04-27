@@ -1,0 +1,17 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+logs/nginx/
+!logs/nginx/.gitkeep
+logs/postgres/
+!logs/postgres/.gitkeep
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
