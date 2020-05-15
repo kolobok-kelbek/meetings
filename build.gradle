@@ -65,19 +65,6 @@ test {
     useJUnitPlatform()
 }
 
-def Properties localBootRunProperties() {
-    Properties p = new Properties();
-    p.load(new FileInputStream(
-            file(project.projectDir).absolutePath + "/src/main/resources/application.yml"))
-    return p;
-}
-
-build {
-    doFirst {
-        bootRun.systemProperties = localBootRunProperties() as Map<String, ?>
-    }
-}
-
 task dockerBuild(type: Exec) {
     group "docker"
     executable "docker"
