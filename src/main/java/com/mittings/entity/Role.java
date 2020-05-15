@@ -34,18 +34,18 @@ public class Role implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(nullable = false, updatable = false)
-  private Long id;
+  Long id;
 
   @Column(nullable = false, unique = true)
-  private String name;
+  String name;
 
   @Column(nullable = false)
-  private Date createdAt = new Date();
+  Date createdAt = new Date();
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "roles_privileges",
       joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
-  private Collection<Privilege> privileges;
+  Collection<Privilege> privileges;
 }

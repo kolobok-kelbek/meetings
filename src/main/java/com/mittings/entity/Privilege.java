@@ -33,13 +33,13 @@ public class Privilege implements GrantedAuthority, Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(nullable = false, updatable = false)
-  private Long id;
+  Long id;
 
   @Column(nullable = false)
-  private String name;
+  String name;
 
   @Column(nullable = false)
-  private Date createdAt = new Date();
+  Date createdAt = new Date();
 
   @Override
   public String getAuthority() {

@@ -3,17 +3,9 @@ package com.mittings.service;
 import com.mittings.entity.Privilege;
 import com.mittings.entity.Role;
 import com.mittings.entity.User;
-import com.mittings.model.input.PaginationQuery;
 import com.mittings.repository.RoleRepository;
 import com.mittings.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,11 +13,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 @Service
 public class UserService implements UserDetailsManager {
 
-  private UserRepository userRepository;
-  private RoleRepository roleRepository;
+  private final UserRepository userRepository;
+  private final RoleRepository roleRepository;
 
   @Autowired
   public UserService(UserRepository userRepository, RoleRepository roleRepository) {
@@ -40,17 +37,8 @@ public class UserService implements UserDetailsManager {
     return findUserByUsername(username);
   }
 
-  public User findUser(UUID id) {
-    return userRepository.findById(id).orElse(null);
-  }
-
   public User findUserByUsername(String username) {
     return userRepository.findByUsername(username).orElse(null);
-  }
-
-  public Page<User> findLimitUsers(PaginationQuery paginationQuery) {
-    return userRepository.findAll(
-        PageRequest.of(paginationQuery.getOffset(), paginationQuery.getLimit()));
   }
 
   public Role findRole(String name) {

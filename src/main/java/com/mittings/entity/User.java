@@ -31,41 +31,40 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Builder
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
-public final class User implements UserDetails {
+public class User implements UserDetails {
   @Id
   @GeneratedValue
   @Column(nullable = false, updatable = false)
-  private UUID id;
+  UUID id;
 
-  private String username;
-
-  @Column(nullable = false)
-  @NonNull
-  private String password;
+  String username;
 
   @Column(nullable = false)
-  private boolean enabled;
+  @NonNull String password;
 
   @Column(nullable = false)
-  private boolean accountNonExpired;
+  boolean enabled;
 
   @Column(nullable = false)
-  private boolean accountNonLocked;
+  boolean accountNonExpired;
 
   @Column(nullable = false)
-  private boolean credentialsNonExpired;
-
-  private Date updatedAt;
+  boolean accountNonLocked;
 
   @Column(nullable = false)
-  private Date createdAt = new Date();
+  boolean credentialsNonExpired;
+
+  Date updatedAt;
+
+  @Column(nullable = false)
+  Date createdAt = new Date();
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "users_roles",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-  private Collection<Role> roles;
+  Collection<Role> roles;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
