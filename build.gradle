@@ -81,7 +81,7 @@ build {
 task dockerBuild(type: Exec) {
     group "docker"
     executable "docker"
-    args "build", "-f", "docker/Dockerfile", "-t", "mittings-api:1.0", "."
+    args "build", "-f", "docker/backend/Dockerfile", "-t", "mittings-api:1.0", "."
     dependsOn 'build'
 }
 
