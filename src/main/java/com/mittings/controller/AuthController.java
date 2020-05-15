@@ -42,7 +42,7 @@ public class AuthController {
   @PostMapping("/signup")
   public UserView signUp(@Valid @RequestBody final Sign sign) throws ConvertException {
     if (userService.userExists(sign.getUsername())) {
-      throw new ResponseStatusException(BAD_REQUEST, "User with this phone number exist.");
+      throw new ResponseStatusException(BAD_REQUEST, "User with this username exist.");
     }
 
     Sign signWithRoles =
