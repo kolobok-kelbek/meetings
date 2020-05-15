@@ -4,7 +4,7 @@ services:
 
   web:
     image: nginx:alpine
-    container_name: mittings-nginx
+    container_name: meetings-nginx
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./logs/nginx:/var/log/nginx
@@ -14,19 +14,19 @@ services:
       - api
       - adminer
     networks:
-      - mittings-network
+      - meetings-network
 
   api:
-    image: mittings-api:1.0
-    container_name: mittings-api
+    image: meetings-api:1.0
+    container_name: meetings-api
     networks:
-      - mittings-network
+      - meetings-network
     depends_on:
       - db
 
   db:
     build: docker/postgres
-    container_name: mittings-postgres
+    container_name: meetings-postgres
     environment:
       POSTGRES_USER: dev
       POSTGRES_PASSWORD: dev
@@ -34,32 +34,32 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - mittings-db-config-data:/var/lib/postgresql/data
+      - meetings-db-config-data:/var/lib/postgresql/data
       - ./logs/postgres:/var/log/postgresql
     networks:
-      - mittings-network
+      - meetings-network
 
   adminer:
     image: adminer
-    container_name: mittings-adminer
+    container_name: meetings-adminer
     restart: always
     depends_on:
       - db
     networks:
-      - mittings-network
+      - meetings-network
 
 #  frontend:
 #    build: docker/frontend
-#    container_name: mittings-frontend
+#    container_name: meetings-frontend
 #    command: bash -c "npm run dev"
 #    user: 1000:1000
 #    volumes:
 #      - ./frontend:/app
 #    networks:
-#      - mittings-network
+#      - meetings-network
 
 networks:
-  mittings-network:
+  meetings-network:
 
 volumes:
-  mittings-db-config-data:
+  meetings-db-config-data:

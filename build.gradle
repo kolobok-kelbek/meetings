@@ -5,7 +5,7 @@ plugins {
     id 'java'
 }
 
-group 'com.mittings'
+group 'com.meetings'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
@@ -68,7 +68,7 @@ test {
 task dockerBuild(type: Exec) {
     group "docker"
     executable "docker"
-    args "build", "-f", "docker/backend/Dockerfile", "-t", "mittings-api:1.0", "."
+    args "build", "-f", "docker/backend/Dockerfile", "-t", "meetings-api:1.0", "."
     dependsOn 'build'
 }
 
