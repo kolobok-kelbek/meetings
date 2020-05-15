@@ -125,5 +125,5 @@ task dcRestartAPI(type: Exec) {
     group "docker-compose"
     executable "docker-compose"
     args "up", "--detach", "--build", "api"
-    dependsOn 'user-manager:dockerBuild'
+    dependsOn 'dockerBuild'
 }
