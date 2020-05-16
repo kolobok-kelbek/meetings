@@ -4,10 +4,14 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-logs/nginx/
-!logs/nginx/.gitkeep
-logs/postgres/
-!logs/postgres/.gitkeep
+logs/dev/nginx/
+!logs/dev/nginx/.gitkeep
+logs/dev/postgres/
+!logs/dev/postgres/.gitkeep
+logs/test/nginx/
+!logs/test/nginx/.gitkeep
+logs/test/postgres/
+!logs/test/postgres/.gitkeep
 
 ### IntelliJ IDEA ###
 .idea

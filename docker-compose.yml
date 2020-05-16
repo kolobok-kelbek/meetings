@@ -7,7 +7,7 @@ services:
     container_name: meetings-nginx
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./logs/nginx:/var/log/nginx
+      - ./logs/dev/nginx:/var/log/nginx
     ports:
       - 80:80
     links:
@@ -35,7 +35,7 @@ services:
       - 5432:5432
     volumes:
       - meetings-db-config-data:/var/lib/postgresql/data
-      - ./logs/postgres:/var/log/postgresql
+      - ./logs/dev/postgres:/var/log/postgresql
     networks:
       - meetings-network
 
