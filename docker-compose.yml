@@ -52,15 +52,15 @@ services:
     networks:
       - meetings-network
 
-#  frontend:
-#    build: docker/frontend
-#    container_name: meetings-frontend
-#    command: bash -c "npm run dev"
-#    user: 1000:1000
-#    volumes:
-#      - ./frontend:/app
-#    networks:
-#      - meetings-network
+  frontend:
+    build: docker/frontend
+    container_name: meetings-frontend
+    tty: true
+    user: 1000:1000
+    volumes:
+      - ./frontend:/app
+    networks:
+      - meetings-network
 
 networks:
   meetings-network:
