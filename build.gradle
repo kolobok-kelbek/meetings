@@ -67,6 +67,9 @@ dependencies {
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
 }
 
+build.dependsOn(tasks.googleJavaFormat)
+verifyGoogleJavaFormat.mustRunAfter(tasks.googleJavaFormat)
+
 test {
     useJUnitPlatform()
 }
