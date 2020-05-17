@@ -1,9 +1,12 @@
-FROM openjdk:11-jre-slim
+FROM gradle:6.3-jdk11
 
-VOLUME /tmp
+WORKDIR /app
 
-COPY build/libs/meetings-1.0-SNAPSHOT.jar '/app.jar'
+COPY entrypoint.sh /usr/local/bin/
 
-EXPOSE 8080
+RUN chmod 777 /usr/local/bin/entrypoint.sh \
+    && ln -s /usr/local/bin/entrypoint.sh /
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+EXPOSE 8080 5005
+
+ENTRYPOINT ["entrypoint.sh"]

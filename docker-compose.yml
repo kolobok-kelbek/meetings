@@ -1,7 +1,6 @@
 version: "3.6"
 
 services:
-
   web:
     image: nginx:alpine
     container_name: meetings-nginx
@@ -17,8 +16,13 @@ services:
       - meetings-network
 
   api:
-    image: meetings-api:1.0
+    build: docker/backend
     container_name: meetings-api
+    command: gradle bootRun
+    ports:
+      - 5005:5005
+    volumes:
+      - .:/app
     networks:
       - meetings-network
     depends_on:
