@@ -5,10 +5,7 @@ import com.meetings.entity.Role;
 import com.meetings.entity.User;
 import com.meetings.repository.RoleRepository;
 import com.meetings.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,6 +35,10 @@ public class UserService implements UserDetailsManager {
 
   public User findUserByUsername(String username) {
     return userRepository.findByUsername(username).orElse(null);
+  }
+
+  public User findUserById(UUID id) {
+    return userRepository.findById(id).orElse(null);
   }
 
   public Role findRole(String name) {

@@ -5,6 +5,8 @@ import com.meetings.converter.Converter;
 import com.meetings.converter.ObjectConverter;
 import com.meetings.converter.PageToListViewConverter;
 import com.meetings.converter.SimpleConverter;
+import com.meetings.converter.meeting.EntityToViewConverter;
+import com.meetings.converter.meeting.InputToEntityConverter;
 import com.meetings.converter.user.SignToUserConverter;
 import com.meetings.model.view.ListView;
 import org.modelmapper.ModelMapper;
@@ -22,11 +24,15 @@ public class ConverterFactory {
   public ConverterFactory(
       final ObjectMapper jsonMapper,
       final ModelMapper modelMapper,
-      final SignToUserConverter signToUserConverter) {
+      final SignToUserConverter signToUserConverter,
+      final InputToEntityConverter inputToEntityConverter,
+      final EntityToViewConverter entityToViewConverter) {
     this.jsonMapper = jsonMapper;
     this.modelMapper = modelMapper;
 
     this.modelMapper.addConverter(signToUserConverter);
+    this.modelMapper.addConverter(inputToEntityConverter);
+    this.modelMapper.addConverter(entityToViewConverter);
   }
 
   public <IN, OUT> SimpleConverter<IN, OUT> createSimpleConverter() {

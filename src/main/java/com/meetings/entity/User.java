@@ -5,16 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -66,6 +57,9 @@ public class User implements UserDetails {
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   Collection<Role> roles;
+
+  @OneToMany(mappedBy = "user")
+  Collection<Meeting> meetings;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

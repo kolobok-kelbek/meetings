@@ -9,9 +9,20 @@ import lombok.Value;
 @Builder
 @RequiredArgsConstructor
 public class PaginationQuery {
+  int DEFAULT_LIMIT = 10;
+  int DEFAULT_OFFSET = 0;
+
   @Min(value = 0, message = "Invalid value of limit.")
-  private int limit;
+  Integer limit;
 
   @Min(value = 0, message = "Invalid value of offset.")
-  private int offset;
+  Integer offset;
+
+  public Integer getLimit() {
+    return null == limit ? DEFAULT_LIMIT : limit;
+  }
+
+  public Integer getOffset() {
+    return null == offset ? DEFAULT_OFFSET : offset;
+  }
 }
