@@ -1,6 +1,5 @@
 package com.meetings.model.view;
 
-import java.util.Date;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,7 @@ public class Meeting {
 
   UUID userId;
 
-  Date from;
+  String from;
 
-  Date to;
+  String to;
 }
